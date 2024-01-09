@@ -116,6 +116,9 @@ export function GeneralSection() {
     //then add the new created object
     //into the array and increment the id
     const a = [...generalObject];
+    generalObject.push(a);
+    nextId++;
+    console.log(generalObject);
   }
 
   return (
