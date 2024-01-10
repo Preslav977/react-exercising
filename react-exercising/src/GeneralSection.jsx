@@ -91,6 +91,8 @@ export function GeneralSection() {
     { fullName: "", email: "", phoneNumber: "", address: "", id: nextId },
   ]);
 
+  const [addNewObt, setNewObj] = useState([generalObject[0]]);
+
   function handleSubmit(e) {
     e.preventDefault();
     const getFormData = new FormData(e.target);
@@ -115,10 +117,8 @@ export function GeneralSection() {
     //create copy of the array
     //then add the new created object
     //into the array and increment the id
-    const a = [...generalObject];
-    generalObject.push(a);
-    nextId++;
-    console.log(generalObject);
+    setNewObj([...generalObject, { ...addNewObt }]);
+    // console.log(addNewObt);
   }
 
   return (
@@ -152,6 +152,7 @@ export function GeneralSection() {
           </form>
         </div>
       ))}
+      ;
     </>
   );
 }
