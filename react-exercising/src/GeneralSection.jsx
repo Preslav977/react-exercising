@@ -1,158 +1,86 @@
 /* eslint-disable react/jsx-key */
 import { useState } from "react";
 
-// function GeneralSection(label, placeholder) {
-//   return (
-//     <>
-//       <label>
-//         {label}
-//         <input type="text" placeholder={placeholder} />
-//       </label>
-//     </>
-//   );
-// }
-
-// function GeneralSectionList() {
-//   return (
-//     <>
-//       {object.map((obj) => {
-//         return <GeneralSection obj={obj} />;
-//       })}
-//     </>
-//   );
-// }
-
-// export function App() {
-//   const [object, setObject] = useState([{ name: "" }]);
-
-//   return (
-//     <div>
-//       <h2>General Information</h2>
-//       <GeneralSectionList object={object} />
-//     </div>
-//   );
-// }
-
-//OLD WAY OF RENDERING
-
-// const generalItem = generalObject.map((object) => (
-//   <form action="#" onSubmit={handleSubmit}>
-//     <label htmlFor="name">
-//       Name
-//       <input
-//         type="text"
-//         name="name"
-//         placeholder="Name"
-//         key={object.fullName}
-//       />
-//     </label>
-//     <label htmlFor="email">
-//       Email
-//       <input
-//         type="text"
-//         name="email"
-//         placeholder="Email"
-//         key={object.email}
-//       />
-//     </label>
-//     <label htmlFor="phone-number">
-//       Phone Number
-//       <input
-//         type="text"
-//         name="phone-number"
-//         placeholder="Phone Number"
-//         key={object.phoneNumber}
-//       />
-//     </label>
-//     <label htmlFor="address">
-//       Address
-//       <input
-//         type="text"
-//         name="address"
-//         placeholder="Address"
-//         key={object.address}
-//       />
-//     </label>
-//     <button type="submit">Send</button>
-//     <button onClick={addAnotherObject}>Add</button>
-//   </form>
-// ));
-
-// return (
-//   <>
-//     <div>{generalItem}</div>
-//   </>
-// );
-
 let nextId = 0;
 
 export function GeneralSection() {
-  const [generalObject, setGeneralObject] = useState([
-    { fullName: "", email: "", phoneNumber: "", address: "", id: nextId },
+  const [formDataGeneralObject, setFormDataGeneralObject] = useState([
+    {
+      fullName: "",
+      email: "",
+      phoneNumber: "",
+      cityAndProvince: "",
+      id: nextId,
+    },
   ]);
-
-  const [addNewObt, setNewObj] = useState([generalObject[0]]);
 
   function handleSubmit(e) {
     e.preventDefault();
-    const getFormData = new FormData(e.target);
-    const fullNameFormData = getFormData.get("name");
-    const emailFormData = getFormData.get("email");
-    const phoneNumberFormData = getFormData.get("phone-number");
-    const addressFormData = getFormData.get("address");
-    const newGeneralObject = [
-      {
-        ...generalObject,
-        fullName: fullNameFormData,
-        email: emailFormData,
-        phoneNumber: phoneNumberFormData,
-        addressFormData: addressFormData,
-        id: nextId++,
-      },
-    ];
-    setGeneralObject(newGeneralObject);
-  }
-
-  function addAnotherObject() {
-    //create copy of the array
-    //then add the new created object
-    //into the array and increment the id
-    setNewObj([...generalObject, { ...addNewObt }]);
-    // console.log(addNewObt);
+    const FormDataObject = new FormData(e.target);
+    const fullNameData = FormDataObject.get("name");
+    const emailData = FormDataObject.get("email");
+    const phoneNumberData = FormDataObject.get("phone-number");
+    const cityAndProvinceData = FormDataObject.get("city-and-province");
+    const newFormDataGeneralObject = {
+      ...formDataGeneralObject,
+      fullName: fullNameData,
+      email: emailData,
+      phoneNumber: phoneNumberData,
+      cityAndProvince: cityAndProvinceData,
+      id: nextId++,
+    };
+    setFormDataGeneralObject([newFormDataGeneralObject]);
   }
 
   return (
     <>
-      <h2>General Information</h2>
-      {generalObject.map((object) => (
-        <div key={object.id}>
-          <form onSubmit={handleSubmit}>
+      {formDataGeneralObject.map((generalSectionObj) => (
+        <div key={generalSectionObj.id}>
+          <form action="#" onSubmit={handleSubmit}>
             <label htmlFor="name">
               Full Name
-              <input type="text" name="name" placeholder="Name" />
+              <span>
+                <input type="text" name="name" placeholder="Master Yi" />*
+              </span>
             </label>
             <label htmlFor="email">
               Email
-              <input type="text" name="email" placeholder="Email" />
+              <span>
+                <input
+                  type="text"
+                  name="email"
+                  placeholder="master-yi@gmail.com"
+                />
+                *
+              </span>
             </label>
             <label htmlFor="phone-number">
               Phone Number
-              <input
-                type="text"
-                name="phone-number"
-                placeholder="Phone Number"
-              />
+              <span>
+                {" "}
+                <input
+                  type="text"
+                  name="phone-number"
+                  placeholder="+420 1337"
+                />
+                *
+              </span>
             </label>
-            <label htmlFor="address">
-              Address
-              <input type="text" name="address" placeholder="Address" />
+            <label htmlFor="city-and-province">
+              City and Province
+              <span>
+                <input
+                  type="text"
+                  name="city-and-province"
+                  placeholder="Ionia, Bahri"
+                />
+                *
+              </span>
             </label>
-            <button>Send</button>
-            <button onClick={addAnotherObject}>Add</button>
+            <button type="submit">Send</button>
           </form>
         </div>
       ))}
-      ;
     </>
   );
 }
