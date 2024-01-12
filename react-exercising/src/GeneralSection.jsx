@@ -34,6 +34,7 @@ export function GeneralSection() {
 
   return (
     <>
+      <h2>General Information</h2>
       {formDataGeneralObject.map((generalSectionObj) => (
         <div key={generalSectionObj.id}>
           <form action="#" onSubmit={handleSubmit}>
