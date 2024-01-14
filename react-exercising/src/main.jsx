@@ -8,6 +8,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <GeneralSection />
     <EducationSection />
-    <ProfessionalSection />
+    {/* <ProfessionalSection /> */}
   </React.StrictMode>,
 );
