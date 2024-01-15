@@ -6,7 +6,7 @@ import { ProfessionalSection } from "./ProfessionalSection";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <GeneralSection />
+    {/* <GeneralSection /> */}
     <EducationSection />
     {/* <ProfessionalSection /> */}
   </React.StrictMode>,

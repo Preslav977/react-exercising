@@ -1,34 +1,97 @@
 import { useState } from "react";
-import { v4 as uuid } from "uuid";
 
 let nextId = 0;
 
-function Input({ labelFor, label, name, placeholder }) {
+function EducationalForm({
+  degreeLabelFor,
+  schoolLabelFor,
+  cityLabelFor,
+  countryLabelFor,
+  startDateLabelFor,
+  endDateDateLabelFor,
+  degreeLabel,
+  schoolLabel,
+  cityLabel,
+  countryLabel,
+  startDateLabel,
+  endDateLabel,
+  degreeInputName,
+  schoolInputName,
+  cityInputName,
+  countryInputName,
+  startDateInputName,
+  endDateInputName,
+  degreeInputPlaceholder,
+  schoolInputPlaceholder,
+  cityInputPlaceholder,
+  countryLInputPlaceholder,
+  startDateInputPlaceholder,
+  endDateInputPlaceholder,
+}) {
   return (
-    <label htmlFor={labelFor}>
-      {label}
-      <span>
-        <input type="text" name={name} placeholder={placeholder} />*
-      </span>
-    </label>
+    <>
+      <label htmlFor={degreeLabelFor}>
+        {degreeLabel}
+        <input
+          type="text"
+          name={degreeInputName}
+          placeholder={degreeInputPlaceholder}
+        />
+      </label>
+      <label htmlFor={schoolLabelFor}>
+        {schoolLabel}
+        <input
+          type="text"
+          name={schoolInputName}
+          placeholder={schoolInputPlaceholder}
+        />
+      </label>
+      <label htmlFor={cityLabelFor}>
+        {cityLabel}
+        <input
+          type="text"
+          name={cityInputName}
+          placeholder={cityInputPlaceholder}
+        />
+      </label>
+      <label htmlFor={countryLabelFor}>
+        {countryLabel}
+        <input
+          type="text"
+          name={countryInputName}
+          placeholder={countryLInputPlaceholder}
+        />
+      </label>
+      <label htmlFor={startDateLabelFor}>
+        {startDateLabel}
+        <input
+          type="text"
+          name={startDateInputName}
+          placeholder={startDateInputPlaceholder}
+        />
+      </label>
+      <label htmlFor={endDateDateLabelFor}>
+        {endDateLabel}
+        <input
+          type="text"
+          name={endDateInputName}
+          placeholder={endDateInputPlaceholder}
+        />
+      </label>
+    </>
   );
 }
 
-function LivePreview({ degree, school, city, country, startDate, endDate }) {
+function LivePreview({ degree }) {
   return (
     <>
-      <h3>{degree}</h3>
-      <p>{school}</p>
-      <p>{city}</p>
-      <p>{country}</p>
-      <p>{startDate}</p>
-      <p>{endDate}</p>
+      <h2>{degree}</h2>
     </>
   );
 }
 
 export function EducationSection() {
-  const [formDataEducationObject, setFormDataEducationObject] = useState([
+  const [formData, setFormData] = useState([
     {
       degree: "",
       school: "",
@@ -36,13 +99,11 @@ export function EducationSection() {
       country: "",
       startDate: "",
       endDate: "",
-      id: uuid(),
+      id: nextId,
     },
   ]);
 
-  const [educationObjects, setEducationObjects] = useState(
-    formDataEducationObject,
-  );
+  const [createNewObj, setCreateNewObj] = useState(formData);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -53,17 +114,17 @@ export function EducationSection() {
     const countryData = formDataObject.get("country");
     const startDateData = formDataObject.get("start-date");
     const endDateData = formDataObject.get("end-date");
-    const newFormDataEducationObject = {
-      ...formDataEducationObject,
+    const newObjectSubmittedData = {
+      // ...formData,
       degree: degreeData,
       school: schoolData,
       city: cityData,
       country: countryData,
       startDate: startDateData,
-      endDateData: endDateData,
-      id: uuid(),
+      endDate: endDateData,
+      id: nextId++,
     };
-    setFormDataEducationObject([newFormDataEducationObject]);
+    setFormData([...formData, newObjectSubmittedData]);
   }
 
   const addMoreEducation = () => {
@@ -74,60 +135,49 @@ export function EducationSection() {
       country: "",
       startDate: "",
       endDate: "",
-      id: uuid(),
+      id: nextId++,
     };
-    setEducationObjects([...educationObjects, newEducationObject]);
+    setCreateNewObj([...createNewObj, newEducationObject]);
   };
 
   return (
     <>
       <h2>Education Experience</h2>
-      {educationObjects.map((educationSectionObj) => (
-        <div key={educationSectionObj.id}>
+      {createNewObj.map((formObj) => (
+        <div key={formObj.id}>
           <form action="#" onSubmit={handleSubmit}>
-            <Input
-              labelFor="degree"
-              label="Degree"
-              name="degree"
-              placeholder="Degree"
-            />
-            <Input
-              label="School"
-              labelFor="school"
-              name="school"
-              placeholder="School"
-            />
-            <Input
-              label="City"
-              labelFor="city"
-              name="city"
-              placeholder="City"
-            />
-            <Input
-              label="Country"
-              labelFor="country"
-              name="country"
-              placeholder="Country"
-            />
-            <Input
-              label="Start Date"
-              labelFor="start-date"
-              name="start-date"
-              placeholder="Start Date"
-            />
-            <Input
-              label="End Date"
-              labelFor="end-date"
-              name="end-date"
-              placeholder="End Date"
-            />
+            <EducationalForm
+              degreeLabelFor="degree"
+              degreeLabel="Degree"
+              degreeInputName="degree"
+              degreeInputPlaceholder="Degree"
+              schoolLabelFor="school"
+              schoolLabel="School"
+              schoolInputName="school"
+              schoolInputPlaceholder="School"
+              cityLabelFor="city"
+              cityLabel="City"
+              cityInputName="city"
+              cityInputPlaceholder="City"
+              countryLabelFor="country"
+              countryLabel="Country"
+              countryInputName="country"
+              countryLInputPlaceholder="Country"
+              startDateLabelFor="start-date"
+              startDateLabel="Start Date"
+              startDateInputName="start-date"
+              startDateInputPlaceholder="Start Date"
+              endDateDateLabelFor="end-date"
+              endDateLabel="End Date"
+              endDateInputName="end-date"
+              endDateInputPlaceholder="End Date"
+            ></EducationalForm>
             <button type="submit">Send</button>
             <button
               onClick={() => {
-                setEducationObjects(
-                  educationObjects.filter(
-                    (object) => object.id !== educationSectionObj.id,
-                  ),
+                setCreateNewObj(
+                  createNewObj.filter((object) => object.id !== formObj.id),
+                  // setFormData(formData.filter((obj) => obj.id !== formObj.id)),
                 );
               }}
             >
@@ -136,18 +186,9 @@ export function EducationSection() {
           </form>
         </div>
       ))}
-
-      {formDataEducationObject.map((formDataObject) => (
-        <LivePreview
-          degree={formDataObject.degree}
-          school={formDataObject.school}
-          city={formDataObject.city}
-          country={formDataObject.country}
-          startDate={formDataObject.startDate}
-          endDate={formDataObject.endDate}
-        ></LivePreview>
+      {formData.map((obj) => (
+        <LivePreview key={obj.id} degree={obj.degree}></LivePreview>
       ))}
-
       <div>
         <button onClick={addMoreEducation}>Education +</button>
       </div>
