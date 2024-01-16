@@ -1,0 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  margin-top: 20px;
+  outline: 2px solid black;
+  max-width: 600px;
+  justify-content: center;
+  align-items: center;
+}
+
+input {
+  display: flex;
+}
+
+.btnContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.textAreaContainer {
+  /* outline: 2px solid black; */
+  /* margin-top: 20px; */
+  display: flex;
+}

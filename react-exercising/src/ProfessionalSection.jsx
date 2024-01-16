@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import styles from "./ProfessionalSection.module.css";
+
 let nextId = 0;
 
 function ExperienceForm({
@@ -61,6 +63,7 @@ function ExperienceForm({
       <label htmlFor={descriptionLabelFor}>
         {descriptionLabel}
         <textarea
+          className={styles.textAreaContainer}
           type="text"
           name={descriptionInputName}
           placeholder={descriptionInputPlaceholder}
@@ -69,6 +72,26 @@ function ExperienceForm({
         ></textarea>
       </label>
     </>
+  );
+}
+
+function LivePreview({
+  jobTitle,
+  company,
+  startDate,
+  endDate,
+  jobDescription,
+}) {
+  return (
+    <div>
+      <h2>{jobTitle}</h2>
+      <div>
+        <p>{company}</p>
+        <p>{startDate}</p>
+        <p>{endDate}</p>
+        <p>{jobDescription}</p>
+      </div>
+    </div>
   );
 }
 
@@ -85,7 +108,7 @@ export function ProfessionalSection() {
   ]);
 
   function handleSubmit(e) {
-    // e.preventDefault();
+    e.preventDefault();
     const formDataObject = new FormData(e.target);
     const jobTitleData = formDataObject.get("job-title");
     console.log(jobTitleData);
@@ -105,20 +128,8 @@ export function ProfessionalSection() {
     setFormData([newFormProfessionalObject]);
   }
 
-  const addMoreExperience = () => {
-    let newExperienceObject = {
-      jobTitle: "",
-      company: "",
-      startDate: "",
-      endDate: "",
-      jobDescription: "",
-      id: nextId++,
-    };
-    setFormData([...formData, newExperienceObject]);
-  };
-
   return (
-    <>
+    <div className={styles.formContainer}>
       <h2>Professional Experience</h2>
       {formData.map((formObj) => (
         <div key={formObj.id}>
@@ -146,21 +157,16 @@ export function ProfessionalSection() {
               descriptionInputPlaceholder="Main Tasks"
             ></ExperienceForm>
             <button type="submit">Send</button>
-            <button
-              onClick={() =>
-                setFormData(
-                  formData.filter((object) => object.id !== formObj.id),
-                )
-              }
-            >
-              Delete
-            </button>
           </form>
         </div>
       ))}
-      <div>
-        <button onClick={addMoreExperience}>Experience +</button>
-      </div>
-    </>
+      <LivePreview
+        jobTitle={formData[0].jobTitle}
+        company={formData[0].company}
+        startDate={formData[0].startDate}
+        endDate={formData[0].endDate}
+        jobDescription={formData[0].jobDescription}
+      ></LivePreview>
+    </div>
   );
 }

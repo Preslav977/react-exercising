@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 
+import styles from "./EducationSection.module.css";
+
 let nextId = 0;
 
 function EducationalForm({
@@ -134,21 +136,8 @@ export function EducationSection() {
     setFormData([newObjectSubmittedData]);
   }
 
-  const addMoreEducation = () => {
-    let newEducationObject = {
-      degree: "",
-      school: "",
-      city: "",
-      country: "",
-      startDate: "",
-      endDate: "",
-      id: nextId++,
-    };
-    setFormData([...formData, newEducationObject]);
-  };
-
   return (
-    <>
+    <div className={styles.formContainer}>
       <h2>Education Experience</h2>
       {formData.map((formObj) => (
         <div key={formObj.id}>
@@ -180,18 +169,19 @@ export function EducationSection() {
               endDateInputPlaceholder="End Date"
             ></EducationalForm>
             <button type="submit">Send</button>
-            <button>Edit</button>
-            <button
-              onClick={() => {
-                setFormData(formData.filter((obj) => obj.id !== formObj.id));
-              }}
-            >
-              Delete
-            </button>
           </form>
         </div>
       ))}
-      <button onClick={addMoreEducation}>Education +</button>
-    </>
+      <div>
+        <LivePreview
+          degree={formData[0].degree}
+          school={formData[0].school}
+          city={formData[0].city}
+          country={formData[0].country}
+          startDate={formData[0].startDate}
+          endDate={formData[0].endDate}
+        ></LivePreview>
+      </div>
+    </div>
   );
 }

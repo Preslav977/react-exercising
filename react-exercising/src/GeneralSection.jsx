@@ -1,6 +1,8 @@
 /* eslint-disable react/jsx-key */
 import { useState } from "react";
 
+import styles from "./GeneralSection.module.css";
+
 let nextId = 0;
 
 function GeneralForm({
@@ -59,20 +61,20 @@ function GeneralForm({
   );
 }
 
-// function LivePreview({ fullName, email, phoneNumber, cityAndProvince }) {
-//   return (
-//     <div className="abc">
-//       <h2>{fullName}</h2>
-//       <div className="bcd">
-//         <p>{email}</p>
-//         <p>{phoneNumber}</p>
-//         <p>{cityAndProvince}</p>
-//       </div>
-//     </div>
-//   );
-// }
+function LivePreview({ fullName, email, phoneNumber, cityAndProvince }) {
+  return (
+    <div className={styles.test}>
+      <h2>{fullName}</h2>
+      <div>
+        <p>{email}</p>
+        <p>{phoneNumber}</p>
+        <p>{cityAndProvince}</p>
+      </div>
+    </div>
+  );
+}
 
-export function GeneralSection() {
+function GeneralSection() {
   const [formData, setFormData] = useState([
     {
       fullName: "",
@@ -102,45 +104,43 @@ export function GeneralSection() {
   }
 
   return (
-    <div className="form-container">
+    <div className={styles.formContainer}>
+      <h2>General Information</h2>
       {formData.map((formObj) => (
-        <div className="sub-container" key={formObj.id}>
+        <div key={formObj.id}>
           <form action="#" onSubmit={handleSubmit}>
-            <div className="a">
-              <h2>General Information</h2>
-              <GeneralForm
-                fullNameLabelFor="fullName"
-                fullNameLabel="Full Name"
-                fullNameInputName="full-name"
-                fullNameInputPlaceholder="Full Name"
-                emailLabelForLabelFor="email"
-                emailLabel="Email"
-                emailInputName="email"
-                emailInputPlaceholder="Email"
-                phoneNumberLabelFor="phone-number"
-                phoneNumberLabel="Phone Number"
-                phoneNumberInputName="phone-number"
-                phoneNumberInputPlaceholder="Phone Number"
-                cityAndProvinceLabelFor="city-and-province"
-                cityAndProvinceLabel="City and Province"
-                cityAndProvinceInputName="city-and-province"
-                cityAndProvinceInputPlaceholder="City, Province"
-              ></GeneralForm>
-              <button className="btn" type="submit">
-                Send
-              </button>
+            <GeneralForm
+              fullNameLabelFor="fullName"
+              fullNameLabel="Full Name"
+              fullNameInputName="full-name"
+              fullNameInputPlaceholder="Full Name"
+              emailLabelForLabelFor="email"
+              emailLabel="Email"
+              emailInputName="email"
+              emailInputPlaceholder="Email"
+              phoneNumberLabelFor="phone-number"
+              phoneNumberLabel="Phone Number"
+              phoneNumberInputName="phone-number"
+              phoneNumberInputPlaceholder="Phone Number"
+              cityAndProvinceLabelFor="city-and-province"
+              cityAndProvinceLabel="City and Province"
+              cityAndProvinceInputName="city-and-province"
+              cityAndProvinceInputPlaceholder="City, Province"
+            ></GeneralForm>
+            <div className={styles.btnContainer}>
+              <button type="submit">Send</button>
             </div>
           </form>
         </div>
       ))}
-      {/* <div className="container">
-        <LivePreview
-          fullName={formData.fullName}
-          email={formData.email}
-          phoneNumber={formData.phoneNumber}
-          cityAndProvince={formData.cityAndProvince}
-        ></LivePreview>
-      </div> */}
+      <LivePreview
+        fullName={formData[0].fullName}
+        email={formData[0].email}
+        phoneNumber={formData[0].phoneNumber}
+        cityAndProvince={formData[0].cityAndProvince}
+      ></LivePreview>
     </div>
   );
 }
+
+export { GeneralSection };
