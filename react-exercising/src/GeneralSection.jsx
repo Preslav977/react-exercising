@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-key */
 import { useState } from "react";
-// import { v4 as uuid } from "uuid";
 
 let nextId = 0;
 
@@ -23,7 +22,7 @@ function GeneralForm({
   cityAndProvinceInputPlaceholder,
 }) {
   return (
-    <>
+    <div>
       <label htmlFor={fullNameLabelFor}>
         {fullNameLabel}
         <input
@@ -56,9 +55,22 @@ function GeneralForm({
           placeholder={cityAndProvinceInputPlaceholder}
         />
       </label>
-    </>
+    </div>
   );
 }
+
+// function LivePreview({ fullName, email, phoneNumber, cityAndProvince }) {
+//   return (
+//     <div className="abc">
+//       <h2>{fullName}</h2>
+//       <div className="bcd">
+//         <p>{email}</p>
+//         <p>{phoneNumber}</p>
+//         <p>{cityAndProvince}</p>
+//       </div>
+//     </div>
+//   );
+// }
 
 export function GeneralSection() {
   const [formData, setFormData] = useState([
@@ -70,12 +82,6 @@ export function GeneralSection() {
       id: nextId,
     },
   ]);
-
-  const [saveFormData, setSaveFormData] = useState([formData]);
-
-  const saveFormValues = () => {
-    setSaveFormData([...saveFormData]);
-  };
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -92,39 +98,49 @@ export function GeneralSection() {
       cityAndProvince: cityAndProvinceData,
       id: nextId++,
     };
-    setFormData(newObjectSubmittedData);
+    setFormData([newObjectSubmittedData]);
   }
 
   return (
-    <>
-      <h2>General Information</h2>
-      {saveFormData.map((formObj) => (
-        <div key={formObj.id}>
+    <div className="form-container">
+      {formData.map((formObj) => (
+        <div className="sub-container" key={formObj.id}>
           <form action="#" onSubmit={handleSubmit}>
-            <GeneralForm
-              fullNameLabelFor="fullName"
-              fullNameLabel="Full Name"
-              fullNameInputName="full-name"
-              fullNameInputPlaceholder="Full Name"
-              emailLabelForLabelFor="email"
-              emailLabel="Email"
-              emailInputName="email"
-              emailInputPlaceholder="Email"
-              phoneNumberLabelFor="phone-number"
-              phoneNumberLabel="Phone Number"
-              phoneNumberInputName="phone-number"
-              phoneNumberInputPlaceholder="Phone Number"
-              cityAndProvinceLabelFor="city-and-province"
-              cityAndProvinceLabel="City and Province"
-              cityAndProvinceInputName="city-and-province"
-              cityAndProvinceInputPlaceholder="City, Province"
-            ></GeneralForm>
-            <button type="submit" onClick={saveFormValues}>
-              Send
-            </button>
+            <div className="a">
+              <h2>General Information</h2>
+              <GeneralForm
+                fullNameLabelFor="fullName"
+                fullNameLabel="Full Name"
+                fullNameInputName="full-name"
+                fullNameInputPlaceholder="Full Name"
+                emailLabelForLabelFor="email"
+                emailLabel="Email"
+                emailInputName="email"
+                emailInputPlaceholder="Email"
+                phoneNumberLabelFor="phone-number"
+                phoneNumberLabel="Phone Number"
+                phoneNumberInputName="phone-number"
+                phoneNumberInputPlaceholder="Phone Number"
+                cityAndProvinceLabelFor="city-and-province"
+                cityAndProvinceLabel="City and Province"
+                cityAndProvinceInputName="city-and-province"
+                cityAndProvinceInputPlaceholder="City, Province"
+              ></GeneralForm>
+              <button className="btn" type="submit">
+                Send
+              </button>
+            </div>
           </form>
         </div>
       ))}
-    </>
+      {/* <div className="container">
+        <LivePreview
+          fullName={formData.fullName}
+          email={formData.email}
+          phoneNumber={formData.phoneNumber}
+          cityAndProvince={formData.cityAndProvince}
+        ></LivePreview>
+      </div> */}
+    </div>
   );
 }

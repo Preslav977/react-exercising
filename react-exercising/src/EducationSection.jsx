@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 
 let nextId = 0;
@@ -82,11 +83,18 @@ function EducationalForm({
   );
 }
 
-function LivePreview({ degree }) {
+function LivePreview({ degree, school, city, country, startDate, endDate }) {
   return (
-    <>
+    <div>
       <h2>{degree}</h2>
-    </>
+      <div>
+        <p>{school}</p>
+        <p>{city}</p>
+        <p>{country}</p>
+        <p>{startDate}</p>
+        <p>{endDate}</p>
+      </div>
+    </div>
   );
 }
 
@@ -103,8 +111,6 @@ export function EducationSection() {
     },
   ]);
 
-  const [createNewObj, setCreateNewObj] = useState(formData);
-
   function handleSubmit(e) {
     e.preventDefault();
     const formDataObject = new FormData(e.target);
@@ -115,7 +121,7 @@ export function EducationSection() {
     const startDateData = formDataObject.get("start-date");
     const endDateData = formDataObject.get("end-date");
     const newObjectSubmittedData = {
-      // ...formData,
+      ...formData,
       degree: degreeData,
       school: schoolData,
       city: cityData,
@@ -124,7 +130,8 @@ export function EducationSection() {
       endDate: endDateData,
       id: nextId++,
     };
-    setFormData([...formData, newObjectSubmittedData]);
+
+    setFormData([newObjectSubmittedData]);
   }
 
   const addMoreEducation = () => {
@@ -137,15 +144,15 @@ export function EducationSection() {
       endDate: "",
       id: nextId++,
     };
-    setCreateNewObj([...createNewObj, newEducationObject]);
+    setFormData([...formData, newEducationObject]);
   };
 
   return (
     <>
       <h2>Education Experience</h2>
-      {createNewObj.map((formObj) => (
+      {formData.map((formObj) => (
         <div key={formObj.id}>
-          <form action="#" onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
             <EducationalForm
               degreeLabelFor="degree"
               degreeLabel="Degree"
@@ -173,12 +180,10 @@ export function EducationSection() {
               endDateInputPlaceholder="End Date"
             ></EducationalForm>
             <button type="submit">Send</button>
+            <button>Edit</button>
             <button
               onClick={() => {
-                setCreateNewObj(
-                  createNewObj.filter((object) => object.id !== formObj.id),
-                  // setFormData(formData.filter((obj) => obj.id !== formObj.id)),
-                );
+                setFormData(formData.filter((obj) => obj.id !== formObj.id));
               }}
             >
               Delete
@@ -186,12 +191,7 @@ export function EducationSection() {
           </form>
         </div>
       ))}
-      {formData.map((obj) => (
-        <LivePreview key={obj.id} degree={obj.degree}></LivePreview>
-      ))}
-      <div>
-        <button onClick={addMoreEducation}>Education +</button>
-      </div>
+      <button onClick={addMoreEducation}>Education +</button>
     </>
   );
 }
